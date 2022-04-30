@@ -1,7 +1,5 @@
-from curses import A_COLOR
 import tkinter as tk
 import random
-from database import guitarChords
 import time
 
 window = tk.Tk()
