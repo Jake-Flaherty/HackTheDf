@@ -2,15 +2,21 @@ import tkinter as tk
 import random
 import time
 
+# Creation of the original root window
+
 window = tk.Tk()
 window.title("Fretboard Learning")
 window.geometry("500x500")
 
+# Empty value used to track the input of the frets
 
 value = ''
 
+# An array that includes the the chords that can be chosen randomly
+
 chordArray = ['F', 'C', 'E', 'A', 'D', 'G', 'B']
 
+# Function to find a random chord from the array and makes a global variable of the random chords
 
 def randChord():
 	global chordArray
@@ -20,6 +26,8 @@ def randChord():
 	global randomChord
 	randomChord = chordArray[x]
 
+# Functions to update the windows and the label that includes the random chord
+# One of my biggest problems occured here since I needed my random chord label to update whenever it changed this is my solution
 
 def updateGuitar():
 	chordLabel = tk.Label(guitarWindow, text=randomChord, font=("Helvetica", 15)).grid(row=7, column=5)
@@ -29,13 +37,11 @@ def updateBass():
 	chordLabel = tk.Label(bassWindow, text=randomChord, font=("Helvetica", 15)).grid(row=5, column=5)
 	bassWindow.after(100, updateBass)
 
+# Functions for the right and wrong labels on the screen
 
 def updateRightGuitar():
 	correctGuitar = tk.Label(guitarWindow, text=' Right ', bg='green').grid(row = 8, column = 1)
 	guitarWindow
-	
-def bassLabelDestroy():
-	yourNote.destroy()
 
 def updateWrongGuitar():
 	wrongGuitar = tk.Label(guitarWindow, text='Wrong', bg='red').grid(row = 8, column = 1)
@@ -46,11 +52,12 @@ def updateRightBass():
 	wrongBass = tk.Label(bassWindow, text=' Right ', bg='green').grid(row = 7, column = 1)
 	bassWindow
 	
-
 def updateWrongBass():
 	wrongBass = tk.Label(bassWindow, text='Wrong', bg='red').grid(row = 7, column = 1)
 	bassWindow
 
+# Functions for the chords
+# I also had to seperate the chord names for bass and guitar since they are in different windows
 
 def E():
 	global value
@@ -180,21 +187,24 @@ def Wrongbass():
 	else:
 		updateWrongBass()
 
-
 def guitarBox(): # box for the guitar fretboard quiz
+	# global imports for what I needed elsewhere from this function
 	global window
 	global value
 	global randomChord
 	global guitarWindow
+	# Creation of the window 
 	guitarWindow = tk.Toplevel(window)
 	guitarWindow.title("Guitar Fretboard")
 	guitarWindow.geometry("560x250")
+	# label creation
 	Labele = tk.Label(guitarWindow, text = 'e').grid(row = 1, column = 0)
 	LabelB = tk.Label(guitarWindow, text = 'B').grid(row = 2, column = 0)
 	LabelG = tk.Label(guitarWindow, text = 'G').grid(row = 3, column = 0)
 	LabelD = tk.Label(guitarWindow, text = 'D').grid(row = 4, column = 0)
 	LabelA = tk.Label(guitarWindow, text = 'A').grid(row = 5, column = 0)
 	LabelE = tk.Label(guitarWindow, text = 'E').grid(row = 6, column = 0)
+	# About a million buttons
 	Btn1 = tk.Button(guitarWindow, text = '1st Fret', command=F)
 	Btn1.grid(row = 1, column = 1)
 	Btn2 = tk.Button(guitarWindow, text = '1st Fret', command=C)
@@ -257,23 +267,29 @@ def guitarBox(): # box for the guitar fretboard quiz
 	Btn30.grid(row = 6, column = 5)
 	chordBtn = tk.Button(guitarWindow, text = 'Get Random Chord', command=randChord)
 	chordBtn.grid(row=6, column=6)
+	# Instruction text 
 	instructions = tk.Label(guitarWindow, text='Click', font=("Helvetica", 15)).grid(row=7, column=1)
 	instructions2 = tk.Label(guitarWindow, text='The', font=("Helvetica", 15)).grid(row=7, column=2)
 	instructions3 = tk.Label(guitarWindow, text='Note:', font=("Helvetica", 15)).grid(row=7, column=3)
+	# Update the window!
 	guitarWindow.after(1000, updateGuitar)
 
 
 def bassBox(): # box for the bass fretboard quiz
+	# Global imports I needed elsewhere
 	global window
 	global value
 	global bassWindow
+	# Creating the window
 	bassWindow = tk.Toplevel(window)
 	bassWindow.title("Bass Window")
 	bassWindow.geometry("560x250")
+	# Labels for the chords 
 	LabelG = tk.Label(bassWindow, text = 'G').grid(row = 1, column = 0)
 	LabelD = tk.Label(bassWindow, text = 'D').grid(row = 2, column = 0)
 	LabelA = tk.Label(bassWindow, text = 'A').grid(row = 3, column = 0)
 	LabelE = tk.Label(bassWindow, text = 'E').grid(row = 4, column = 0)
+	# A bunch of buttons
 	bassBtn1 = tk.Button(bassWindow, text = '1st Fret', command=Wrongbass).grid(row = 1, column = 1)
 	bassBtn2 = tk.Button(bassWindow, text = '1st Fret', command=Wrongbass).grid(row = 2, column = 1)
 	bassBtn3 = tk.Button(bassWindow, text = '1st Fret', command=Wrongbass).grid(row = 3, column = 1)
@@ -296,13 +312,20 @@ def bassBox(): # box for the bass fretboard quiz
 	bassBtn20 = tk.Button(bassWindow, text = '5th Fret', command=Abass).grid(row = 4, column = 5)
 	chordBtn = tk.Button(bassWindow, text = 'Get Random Chord', command=randChord)
 	chordBtn.grid(row=5, column=6)
+	# Instructions!
 	instructions = tk.Label(bassWindow, text='Click', font=("Helvetica", 15)).grid(row=5, column=1)
 	instructions2 = tk.Label(bassWindow, text='The', font=("Helvetica", 15)).grid(row=5, column=2)
 	instructions3 = tk.Label(bassWindow, text='Note:', font=("Helvetica", 15)).grid(row=5, column=3)
+	# Updating the window
 	bassWindow.after(100, updateBass)
+
+# Quit button
 
 def quiting():
 	window.destroy()
+
+# Functions that run both random chord functions and the opening window function
+# on the button press so that we have a chord printed out when you start the window
 
 def both():
 	randChord()
@@ -312,6 +335,8 @@ def bothBass():
 	randChord()
 	bassBox()
 
+# Final label and buttons on thw root window
+
 TopLabel = tk.Label(text="Pick which instrument you would like to practice!")
 TopLabel.pack(pady = 25)
 guitarQuiz = tk.Button(text="Click for Guitar Practice", command = both)
@@ -320,5 +345,7 @@ bassQuiz = tk.Button(text='Click for Bass Practice', command = bothBass)
 bassQuiz.pack(pady = 25)
 QuitBtn = tk.Button(text='Quit', command = quiting)
 QuitBtn.pack(pady = 25)
+
+# This is mandatory don't ask me!
 
 tk.mainloop()
